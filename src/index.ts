@@ -70,6 +70,14 @@ const createNewBlock = (data: string): Block => {
   return newBlock;
 };
 
+const getHashforBlock = (aBlock: Block): string =>
+  Block.calculateBlockHash(
+    aBlock.index,
+    aBlock.previousHash,
+    aBlock.timestamp,
+    aBlock.data
+  );
+
 const isBlockValid = (candiateBlock: Block, previousBlock: Block): boolean => {
   if (!Block.validateStructure(candiateBlock)) {
     return false;
@@ -77,6 +85,16 @@ const isBlockValid = (candiateBlock: Block, previousBlock: Block): boolean => {
     return false;
   } else if (previousBlock.hash !== candiateBlock.previousHash) {
     return false;
+  } else if (getHashforBlock(candiateBlock) !== candiateBlock.hash) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const addBlock = (candidateBlock: Block): void => {
+  if (isBlockValid(candidateBlock, getLatestBlock())) {
+    blockChain.push(candidateBlock);
   }
 };
 
