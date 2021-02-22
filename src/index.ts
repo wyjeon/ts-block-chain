@@ -66,7 +66,7 @@ const createNewBlock = (data: string): Block => {
     data,
     newTimeStamp
   );
-
+  addBlock(newBlock);
   return newBlock;
 };
 
@@ -97,5 +97,11 @@ const addBlock = (candidateBlock: Block): void => {
     blockChain.push(candidateBlock);
   }
 };
+
+createNewBlock('block1');
+createNewBlock('block2');
+createNewBlock('block3');
+
+console.log(blockChain);
 
 export {};
